@@ -1,0 +1,650 @@
+% =====================================================================
+%  Guía práctica: Crea tu primera maquetación de página en ConTeXt
+%  Mismo sistema de diseño que las guías anteriores.
+%  Compilar con:  context maquetacion.tex
+% =====================================================================
+
+% ---------------------------------------------------------------------
+% 1. Tipografía y colores
+% ---------------------------------------------------------------------
+%\definefontfamily [mainface] [rm] [TeX Gyre Pagella]
+%\definefontfamily [mainface] [ss] [Latin Modern Sans]
+%\definefontfamily [mainface] [tt] [Latin Modern Mono]
+%\setupbodyfont     [mainface,11pt]
+%\mainlanguage[es]
+%
+%\definecolor [inkblue]    [r=0.11, g=0.16, b=0.32]
+%\definecolor [accent]     [r=0.72, g=0.20, b=0.20]
+%\definecolor [accentb]    [r=0.10, g=0.35, b=0.45]
+%\definecolor [resultgreen][r=0.13, g=0.42, b=0.24]
+%\definecolor [softgray]   [r=0.45, g=0.45, b=0.45]
+%\definecolor [panelbg]    [r=0.96, g=0.96, b=0.94]
+%\definecolor [resultbg]   [r=0.94, g=0.97, b=0.94]
+%\definecolor [codebg]     [r=0.965,g=0.965,b=0.98]
+%\definecolor [codeframe]  [r=0.80, g=0.80, b=0.85]
+%
+%\setupcolors [state=start]
+%
+%% ---------------------------------------------------------------------
+%% 2. Página y márgenes
+%% ---------------------------------------------------------------------
+%\setuppapersize   [letter]
+%\setuplayout      [
+%  topspace=2cm, backspace=3cm,
+%  header=1cm, footer=1cm,
+%  width=middle, height=middle,
+%  leftmargin=0cm, rightmargin=0cm,
+%]
+%\setupwhitespace [medium]
+%\setupindenting  [never]
+%
+%% ---------------------------------------------------------------------
+%% 3. Encabezados de sección
+%% ---------------------------------------------------------------------
+%\definehead [tutorialsection] [section]
+%
+%\setuphead [tutorialsection]
+%  [style=\bf,
+%   color=inkblue,
+%   number=yes,
+%   numbercolor=accent,
+%   numberstyle=\bf]
+%
+%\setuphead [subsection]
+%  [style=\bf, color=accentb]
+%
+%\setuphead [subsubsection]
+%  [style=\bf, color=accentb]
+%
+%% ---------------------------------------------------------------------
+%% 4. Bloques de código
+%% ---------------------------------------------------------------------
+%\definetyping  [contextcode] [
+%  option=TEX,
+%  space=on,
+%  style=\tt,
+%]
+%
+%\setupbackgrounds [contextcode] [background=color, backgroundcolor=codebg]
+%
+%\setuptyping [contextcode] [
+%  frame=off,
+%  framecolor=codeframe,
+%  rulethickness=0pt,
+%  leftmargindistance=1em,
+%  rightmargindistance=1em,
+%  topspace=0.6em,
+%  bottomspace=0.6em,
+%]
+%
+%% ---------------------------------------------------------------------
+%% 5. Cajas: Problema, Solución, Explicación, Observación, Resultado
+%% ---------------------------------------------------------------------
+%\definestartstop [problema] [before={\blank[small]}, after={\blank[small]}]
+%\definestartstop [solucion] [before={\blank[small]}, after={\blank[small]}]
+%\definestartstop [explicacion] [before={\blank[small]}, after={\blank[small]}]
+%\definestartstop [observacion] [before={\blank[small]}, after={\blank[small]}]
+%\definestartstop [resultado] [before={\blank[small]}, after={\blank[small]}]
+%
+%\define[1]\Problema{\blank[small]\startproblema{\bf Problema. }#1\stopproblema\blank[small]}
+%\define[1]\Solucion{\blank[small]\startsolucion{\bf Solución. }#1\stopsolucion\blank[small]}
+%\define[1]\Explicacion{\blank[small]\startexplicacion{\bf Explicación. }#1\stopexplicacion\blank[small]}
+%\define[1]\Observacion{\blank[small]\startobservacion{\bf Observación. }#1\stopobservacion\blank[small]}
+%\define[1]\Resultado{\blank[small]\startresultado{\bf\color[resultgreen]{Resultado.} }#1\stopresultado\blank[small]}
+%
+%% ---------------------------------------------------------------------
+%% 6. Interacción
+%% ---------------------------------------------------------------------
+%\setupinteraction [state=start, color=accentb, contrastcolor=accentb,
+%                   title={Maquetación de página en ConTeXt}]
+%
+%% ---------------------------------------------------------------------
+%% 7. Pie de página
+%% ---------------------------------------------------------------------
+%\setupheadertexts  [][]
+%\setupfootertexts  [][{\ss\small\color[softgray]{\pagenumber}}]
+
+\environment env_tuto
+% =====================================================================
+\starttext
+
+% ------------------------ PORTADA -------------------------------------
+\startstandardmakeup[pagestate=start]
+  \blank[3*big]
+  \blank[medium]
+  \blank[medium]
+  {\ss\bf\switchtobodyfont[24pt]\color[inkblue]{Tutorial}}\par
+  \blank[small]
+  {\ss\bf\switchtobodyfont[17pt]\color[inkblue]{Crea tu primera}}\par
+  {\ss\bf\switchtobodyfont[17pt]\color[tutorialaccent]{maquetación de página en ConTeXt}}\par
+  \blank[medium]
+  \blank[small]
+  \blank[2*big]
+  {\it\color[softgray]{Tamaño, márgenes, encabezados, numeración
+   y ajustes con \type{\adaptlayout}.}}
+  \vfill
+  {\ss\small\color[softgray]{Guía práctica paso a paso}}
+\stopstandardmakeup
+
+% ------------------------ RESUMEN ---------------------------------------
+\startfrontmatter
+
+\tutorialsection{Resumen}
+En este tutorial aprenderemos a controlar la apariencia de las páginas
+en ConTeXt, paso a paso, construyendo un documento sencillo pero
+completo. Al final, tendrás una página con márgenes, encabezado, pie
+de página y numeración personalizados.
+
+\blank[medium]
+{\ss\bf\color[inkblue]{Contenido}}
+\blank[small]
+\blank[small]
+\placelist[tutorialsection][criterium=all,alternative=c]
+
+\stopfrontmatter
+
+% ------------------------ CUERPO ----------------------------------------
+\startbodymatter
+
+% =====================================================================
+\tutorialsection{Prepara tu espacio de trabajo}
+
+Primero, crea una carpeta llamada \tt{mi\_maquetacion} y dentro de
+ella, un archivo llamado \tt{documento.tex} con este contenido
+inicial:
+
+\blank[small]
+\startcontextcod
+\starttext
+
+\chapter{Introducción}
+Este es el contenido de mi documento. Aquí escribiré el texto principal.
+
+\chapter{Siguiente capítulo}
+Más contenido para ver cómo se distribuye en la página.
+
+\stoptext
+\stopcontextcod
+\blank[small]
+
+Compila con \tt{context documento.tex} y observa el resultado.
+Obtendrás un PDF con el formato predeterminado de ConTeXt. Ahora,
+vamos a modificarlo.
+
+% =====================================================================
+\tutorialsection{Establece el tamaño y orientación de la página}
+
+\Problema{Configurar el documento en tamaño A5, orientación vertical
+(retrato).}
+
+\Solucion{Añade esta línea justo antes de \type{\starttext}:}
+
+\blank[small]
+\startcontextcod
+\setuppapersize[A5, portrait]
+\stopcontextcod
+\blank[small]
+
+El archivo ahora luce así:
+
+\blank[small]
+\startcontextcod
+\setuppapersize[A5,portrait]
+
+\starttext
+...
+\stoptext
+\stopcontextcod
+\blank[small]
+
+\Resultado{Vuelve a compilar. Notarás que la página es más pequeña
+que antes (A5). Has cambiado el tamaño del papel.}
+
+\Explicacion{\type{\setuppapersize} controla el tamaño de la página
+final. El primer argumento indica el tamaño lógico (A5) y la
+orientación (retrato). Como no hemos dado un segundo argumento, el
+tamaño físico es el mismo.}
+
+% =====================================================================
+\tutorialsection{Ajusta los márgenes}
+
+\Problema{Queremos que el texto no esté tan pegado a los bordes.
+Vamos a crear márgenes más amplios.}
+
+\Solucion{Justo debajo de \type{\setuppapersize}, añade:}
+
+\blank[small]
+\startcontextcod
+\setuplayout
+  [backspace=2.5cm,
+   width=fit]
+\stopcontextcod
+\blank[small]
+
+El preámbulo ahora es:
+
+\blank[small]
+\startcontextcod
+\setuppapersize[A5, portrait]
+\setuplayout[backspace=2.5cm, width=fit]
+
+\starttext
+...
+\stoptext
+\stopcontextcod
+\blank[small]
+
+\Resultado{Observa cómo el margen izquierdo (backspace) ha
+aumentado. La opción \type{width=fit} hace que el ancho del texto se
+calcule automáticamente para que el margen derecho sea igual al
+izquierdo.}
+
+\Explicacion{Experimenta: cambia el valor de \type{backspace} a 1cm
+o a 4cm. Vuelve a compilar cada vez para ver el efecto. Ajusta el
+valor a tu gusto.}
+
+% =====================================================================
+\tutorialsection{Añade encabezado y pie de página}
+
+\Problema{Incluir un encabezado con el título del capítulo y un pie
+de página con el número de página.}
+
+\Solucion{Primero, añade las opciones para activar el encabezado y el
+pie de página en \type{\setuplayout}:}
+
+\blank[small]
+\startcontextcod
+\setuplayout
+  [backspace=2.5cm,
+   width=fit,
+   header=0.8cm,
+   footer=0.8cm,
+   headerdistance=0.5cm,
+   footerdistance=0.5cm]
+\stopcontextcod
+\blank[small]
+
+Luego, para personalizar el contenido del encabezado y pie, añade las
+siguientes líneas \bf{antes de} \type{\starttext}:
+
+\blank[small]
+\startcontextcod
+\setupheadertexts[{\getmarking[chapter]}]
+
+\setupfootertexts[{\pagenumber}]
+\stopcontextcod
+\blank[small]
+
+Ahora, el preámbulo completo es:
+
+\blank[small]
+\startcontextcod
+\setuppapersize[A5, portrait]
+\setuplayout
+  [backspace=2.5cm,
+   width=fit,
+   header=0.8cm,
+   footer=0.8cm,
+   headerdistance=0.5cm,
+   footerdistance=0.5cm]
+
+\setupheadertexts[{\getmarking[chapter]}]
+\setupfootertexts[{\pagenumber}]
+
+\starttext
+...
+\stoptext
+\stopcontextcod
+\blank[small]
+
+\Resultado{Ahora deberías ver el nombre del capítulo en el encabezado
+y el número de página en el pie.}
+
+\Observacion{Comprobación: pasa a la segunda página (con el capítulo
+``Siguiente capítulo''). El encabezado debería cambiar
+automáticamente al nuevo título. El número de página debería ser
+``2''.}
+
+% =====================================================================
+\tutorialsection{Personaliza la numeración de páginas}
+
+\Problema{Queremos que el número de página aparezca como ``Página 1''
+en lugar de solo ``1''.}
+
+\Solucion{Sustituye la línea de configuración del pie de página por
+esta:}
+
+\blank[small]
+\startcontextcod
+\setupfootertexts[Página \pagenumber]
+\stopcontextcod
+\blank[small]
+
+\Resultado{Ahora el pie muestra ``Página 1'', ``Página 2'', etc.}
+
+\startexplicacion
+\bf Explicación. Si quieres más control, podemos usar
+\type{\setuppagenumbering} para cambiar la ubicación y el formato:
+
+\startcontextcod
+\setuppagenumbering
+  [location={footer,right},
+   style={\ss\bf},
+   color=darkblue]
+\stopcontextcod
+
+Añade esta línea antes de \type{\starttext}. Observa los cambios: el
+número se alinea a la derecha en el pie de página, cambia de fuente y
+color.
+\stopexplicacion
+
+% =====================================================================
+\tutorialsection{Distingue páginas pares e impares (para impresión a dos caras)}
+
+\Problema{Configurar el documento para que los márgenes sean
+simétricos en páginas pares e impares, como en un libro.}
+
+\Solucion{Modifica \type{\setuppapersize} para habilitar la opción ``a
+dos caras'':}
+
+\blank[small]
+\startcontextcod
+\setuppapersize[A5, portrait]
+\setuparranging[2UP]  % Simula un documento a dos caras
+\stopcontextcod
+\blank[small]
+
+\Observacion{Nota: \type{\setuparranging[2UP]} es solo para
+visualización en pantalla. En un documento real impreso, usarías
+\type{\setuppagenumbering[alternative=doublesided]}.}
+
+Luego, cambia \type{backspace} por las opciones \type{inner} y
+\type{outer} en \type{\setuplayout}:
+
+\blank[small]
+\startcontextcod
+\setuplayout
+  [inner=2.5cm,
+   outer=1.5cm,
+   width=fit,
+   header=0.8cm,
+   footer=0.8cm,
+   headerdistance=0.5cm,
+   footerdistance=0.5cm]
+\stopcontextcod
+\blank[small]
+
+\Resultado{Ahora, al visualizar las páginas, verás que el margen
+interior (cerca del lomo) es más grande que el exterior. En una página
+par, el margen ``interior'' estará a la derecha.}
+
+\Observacion{Reflexión: ¿Observas cómo cambia el espacio entre el
+texto y el borde de la página al pasar de una página par a una impar?
+Esto simula la encuadernación de un libro.}
+
+% =====================================================================
+\tutorialsection{Ajustes finos con \type{adaptlayout}}
+
+\Problema{Imagina que una página queda con muy poco texto al final de
+un capítulo. Queremos que ocupe un poco más de espacio.}
+
+\Solucion{Al final del documento, justo antes de \type{\stoptext},
+añade:}
+
+\blank[small]
+\startcontextcod
+\adaptlayout[+2]
+\stopcontextcod
+\blank[small]
+
+\Resultado{Con \type{\adaptlayout}, podemos aumentar o disminuir el
+número de líneas en la página actual.}
+
+\Observacion{Esta herramienta es muy delicada y, como es una operación
+avanzada, simplemente la dejamos aquí para que sepas que existe.}
+
+\tutorialsection{Ejercicio}
+
+Reproduce y mejora este documento:
+% ============================================
+% Tamaño de página y configuración básica
+% ============================================
+\setuppapersize[letter]
+\setuppagenumbering[location=,alternative=doublesided]
+\setupbodyfont[11pt, palatino]
+\mainlanguage[es]
+% Desactivar encabezado por defecto; el pie lleva el texto decorativo
+\setupheadertexts[]
+\setupfootertexts[][{\color[deepblue]{\ss\tfx Hecho con \ConTeXt\ · Página \userpagenumber}}]
+% ============================================
+% Definición de colores
+% ============================================
+\setuppapersize[letter]
+\definecolor[deepblue] [h=173A5A]
+\definecolor[warmgold] [h=C5A66A]
+\definecolor[white]    [h=FFFFFF]
+\definecolor[deepblue][r=0.10, g=0.20, b=0.40]
+\definecolor[warmgold][r=0.85, g=0.65, b=0.30]
+\definecolor[softgray][r=0.94, g=0.93, b=0.91]
+% ============================================
+% Diseño: dejar un margen izquierdo amplio como zona decorativa
+% ============================================
+\setuplayout[
+  backspace=5cm,
+  cutspace=2cm,
+  width=fit,
+  topspace=3cm,
+  bottomspace=3cm,
+  header=0cm,
+  footer=2.0cm,
+  height=fit,
+  margindistance=1cm,
+]
+% ------------------------------------------------------------
+% CAPA
+% ------------------------------------------------------------
+
+\definelayer
+  [leftpanel]
+  [
+    x=0mm,
+    y=0mm,
+    width=\paperwidth,
+    height=\paperheight,
+    repeat=yes,
+  ]
+
+% ------------------------------------------------------------
+% FRANJA AZUL
+% ------------------------------------------------------------
+
+\setlayer
+  [leftpanel]
+  [x=0mm,y=0mm]
+  {\framed
+    [
+      frame=off,
+      width=4.6cm,
+      height=\paperheight,
+      background=color,
+      backgroundcolor=deepblue,
+      offset=0pt
+    ]{}}
+
+% ------------------------------------------------------------
+% TÍTULO VERTICAL
+% ------------------------------------------------------------
+
+\setlayer
+  [leftpanel]
+  [x=8mm,y=60mm]
+  {\rotate
+    [rotation=90]
+    {\framed
+      [
+        frame=off,
+        width=105mm,
+        height=35mm,
+        align=middle,
+        offset=0pt
+      ]
+      {\switchtobodyfont[30pt]
+       \bf
+       \color[white]{Arte tipográfico}
+
+       \blank[medium]
+       \blackrule
+         [
+           width=30mm,
+           height=1pt,
+           color=warmgold
+         ]
+
+       \blank[small]
+       \switchtobodyfont[11pt]
+       \tf
+       \color[white]{La expresión visual en ConTeXt}
+      }}}
+
+% ------------------------------------------------------------
+% ACTIVACIÓN DEL FONDO
+% ------------------------------------------------------------
+
+\setupbackgrounds
+  [page]
+  [background=leftpanel]
+
+% ============================================
+% Barra decorativa del pie de página
+% ============================================
+\definelayer[footerbar][
+  x=0mm, y=0mm,
+  width=\paperwidth,
+  height=\paperheight,
+  repeat=yes,
+]
+\setlayer[footerbar][
+  x=4.5cm, y=\dimexpr(\paperheight-2cm),
+  width=\dimexpr(\paperwidth-6.5cm),
+]{
+  \blackrule[width=\textwidth,height=2pt,color=warmgold]
+}
+
+% ============================================
+% Activar las capas de fondo
+% ============================================
+\setupbackgrounds[page][
+  background={leftpanel, footerbar},
+  state=repeat,
+]
+
+% ------------------------------------------------------------
+% DOCUMENTO DE PRUEBA
+% ------------------------------------------------------------
+
+%\starttext
+
+\startstandardmakeup
+\strut
+\stopstandardmakeup
+
+%\definecolumnsetspan[wall][n=3]
+%\startcolumnset[n=3, distance=0.33cm]
+%\startcolumnsetspan
+\definecolumnset[estandard][n=2, balance=yes,distance=0.33cm]
+\startcolumnset[estandard]
+%\startcolumnsetspan[wide]
+\definedfont[Serif at 22pt]
+\color[deepblue]{Introducción}
+\blank[small]
+\definedfont[Serif at 12pt]\em
+\color[deepblue]{Maquetar no es solo colocar texto, sino hacer que la página hable por sí misma.}
+
+\blank[big]
+\section{¿Para qué a dos columnas?}
+El mecanismo de columnas de \ConTeXt\ permite que el contenido fluya de forma natural. La columna izquierda y la derecha se equilibran automáticamente mediante columnset, ideal para una lectura tipo revista.
+
+\blank[medium]
+Cada párrafo se asienta sobre una retícula base fija; esta es la promesa subyacente de elegancia en \ConTeXt\: la 
+retícula hace que la página respire de manera uniforme.
+
+\blank[medium]
+\startframedtext[
+  frame=off,
+  background=color,
+  backgroundcolor=softgray,
+  width=\textwidth,
+  offset=10pt,
+  corner=round,
+  framecolor=warmgold,
+]
+\bf Bloque destacado:
+aquí se puede usar \type{\definetextbackground} para lograr un fondo que abarca varios párrafos, ideal para citas o notas complementarias.
+\stopframedtext
+
+%blank[medium]
+\startsection[title={Símbolos y ornamentos}]
+El conjunto de símbolos de \ConTeXt\ nos permite crear detalles visuales refinados. Con\break \type{\definesymbol} se pueden redefinir los símbolos de las listas, aportando un toque de diseño incluso a las enumeraciones.
+\stopsection
+\stopcolumnsetspan
+\stopcolumnset
+%\stoptext
+
+
+
+\stopbodymatter
+
+% ------------------------ APÉNDICES --------------------------------------
+\startappendices
+
+\tutorialsection{¡Has logrado!}
+
+Construir una maquetación de página completa en ConTeXt. Ahora sabes:
+
+\startitemize
+\item \bf{Tamaño y orientación}: usar \type{\setuppapersize} para
+      definir el formato de la página.
+\item \bf{Márgenes}: controlar los espacios en blanco con
+      \type{\setuplayout}.
+\item \bf{Encabezados y pies}: personalizar su contenido y
+      dimensiones.
+\item \bf{Numeración}: modificar el estilo, ubicación y formato de
+      los números de página.
+\item \bf{Páginas pares e impares}: configurar márgenes simétricos
+      para impresión a dos caras.
+\item \bf{Ajustes locales}: conocer \type{\adaptlayout} para retoques
+      finales.
+\stopitemize
+
+Este flujo de trabajo es la base para crear documentos con una
+apariencia profesional y controlada. A medida que tus proyectos
+crezcan, estas herramientas te permitirán adaptar el diseño a
+cualquier necesidad.
+
+\stopappendices
+
+% ------------------------ BACKMATTER --------------------------------------
+\startbackmatter
+
+\tutorialsection{Próximos pasos}
+
+\startitemize
+\item \bf{Experimenta}: prueba a cambiar el encabezado para que
+      incluya el número de sección o el título del documento. Usa
+      \type{\getmarking[section]} o
+      \type{\setupheadertexts[Mi Documento]}.
+\item \bf{Explora más opciones}: \type{\setuplayout} tiene muchas más
+      configuraciones, como \type{edge} para bordes, \type{margin}
+      para márgenes laterales, y \type{lines} para establecer la
+      altura del texto en número de líneas.
+\item \bf{Diferentes diseños}: aprende a usar
+      \type{\definelayout} para tener distintos diseños en diferentes
+      partes del documento (por ejemplo, una portada a toda página).
+\item \bf{Recuerda}: la maquetación es una herramienta al servicio
+      del contenido. Un buen diseño facilita la lectura y la
+      comprensión.
+\stopitemize
+
+\stopbackmatter
+
+\stoptext
