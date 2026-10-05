@@ -1,0 +1,894 @@
+% ---------------------------------------------------------------------
+% 1. Tipografía y colores
+% ---------------------------------------------------------------------
+\definefontfamily [mainface] [rm] [Pagella]
+\definefontfamily [mainface] [ss] [Iwona]
+\definefontfamily [mainface] [tt] [ModernMono]
+\setupbodyfont     [mainface,11pt]
+
+\definecolor [inkblue]    [r=0.11, g=0.16, b=0.32]
+\definecolor [accent]     [r=0.72, g=0.20, b=0.20]
+\definecolor [accentb]    [r=0.10, g=0.35, b=0.45]
+\definecolor [resultgreen][r=0.13, g=0.42, b=0.24]
+\definecolor [softgray]   [r=0.45, g=0.45, b=0.45]
+\definecolor [panelbg]    [r=0.96, g=0.96, b=0.94]
+\definecolor [resultbg]   [r=0.94, g=0.97, b=0.94]
+\definecolor [codebg]     [r=0.965,g=0.965,b=0.98]
+\definecolor [codeframe]  [r=0.80, g=0.80, b=0.85]
+
+\setupcolors [state=start]
+
+% ---------------------------------------------------------------------
+% 2. Página y márgenes
+% ---------------------------------------------------------------------
+\setuppapersize   [letter] 
+\setuplayout      [
+  topspace=2cm, backspace=3cm,
+  header=1cm, footer=1cm,
+  width=middle, height=middle,
+  leftmargin=0cm, rightmargin=0cm,
+]
+\setupwhitespace [medium]
+\setupindenting  [never]
+
+% ---------------------------------------------------------------------
+% 3. Encabezados de sección
+% ---------------------------------------------------------------------
+\definehead   [tutorialsection] [section]
+
+\setuphead [tutorialsection]
+  [style=\bf,
+   color=inkblue,
+   number=yes,
+   numbercolor=accent,
+   numberstyle=\bf]
+
+% ---------------------------------------------------------------------
+% 4. Bloques de código
+% ---------------------------------------------------------------------
+\definetyping  [contextcode] [
+  option=TEX,
+  space=on,
+  style=\tt,
+]
+
+\setupbackgrounds [contextcode] [background=color, backgroundcolor=codebg]
+
+\setuptyping [contextcode] [
+  frame=on,
+  framecolor=codeframe,
+  rulethickness=0.4pt,
+  leftmargindistance=1em,
+  rightmargindistance=1em,
+  topspace=0.6em,
+  bottomspace=0.6em,
+]
+
+\definehighlight [texcmd] [style=\bf, color=accent]
+
+% ---------------------------------------------------------------------
+% 5. Cajas: Objetivo, Acción, Explicación, Observación, Resultado
+% ---------------------------------------------------------------------
+\defineframedtext
+  [objetivo]
+  [width=broad, frame=off, background=color, backgroundcolor=panelbg,
+   leftframe=on, framecolor=accentb, rulethickness=2pt, offset=1.2em]
+
+\defineframedtext
+  [accion]
+  [width=broad, frame=off, background=color, backgroundcolor=panelbg,
+   leftframe=on, framecolor=accent, rulethickness=2pt, offset=1.2em]
+
+\defineframedtext
+  [explicacion]
+  [width=broad, frame=off, background=color, backgroundcolor=panelbg,
+   leftframe=on, framecolor=accentb, rulethickness=2pt, offset=1.2em]
+
+\defineframedtext
+  [observacion]
+  [width=broad, frame=off, background=color, backgroundcolor=panelbg,
+   leftframe=on, framecolor=accent, rulethickness=2pt, offset=1.2em]
+
+\defineframedtext
+  [resultado]
+  [width=broad, frame=off, background=color, backgroundcolor=resultbg,
+   leftframe=on, framecolor=resultgreen, rulethickness=2pt, offset=1.2em]
+
+\define[1]\Objetivo{\blank[small]\startobjetivo{\bf Objetivo. }#1\stopobjetivo\blank[small]}
+\define[1]\Accion{\blank[small]\startaccion{\bf Acción. }#1\stopaccion\blank[small]}
+\define[1]\Explicacion{\blank[small]\startexplicacion{\bf Explicación. }#1\stopexplicacion\blank[small]}
+\define[1]\Observacion{\blank[small]\startobservacion{\bf Observación. }#1\stopobservacion\blank[small]}
+\define[1]\Resultado{\blank[small]\startresultado{\bf\color[resultgreen]{Resultado.} }#1\stopresultado\blank[small]}
+
+% ---------------------------------------------------------------------
+% 6. Interacción
+% ---------------------------------------------------------------------
+\setupinteraction [state=start, color=accentb, contrastcolor=accentb,
+                   title={Formato de caracteres en ConTeXt}]
+
+% ---------------------------------------------------------------------
+% 7. Pie de página
+% ---------------------------------------------------------------------
+\setupheadertexts  [][]
+\setupfootertexts  [][{\ss\small\color[softgray]{\pagenumber}}]
+
+
+\environment env_tutorial
+% =====================================================================
+\starttext
+
+% ------------------------ PORTADA -------------------------------------
+\startfrontmatter
+
+\startstandardmakeup[pagestate=start]
+  \blank[3*big]
+  \startcolor[accent]\hrule height 2pt\stopcolor
+  \blank[medium]
+  {\ss\bf\switchtobodyfont[24pt]\color[inkblue]{Tutorial}}\par
+  \blank[small]
+  {\ss\bf\switchtobodyfont[17pt]\color[inkblue]{Domina el formato de}}\par
+  {\ss\bf\switchtobodyfont[17pt]\color[accent]{caracteres, palabras y espacios}}\par
+  \blank[medium]
+  \startcolor[accentb]\hrule height 0.8pt\stopcolor
+  \blank[2*big]
+  {\it\color[softgray]{Mayúsculas, versalitas, super/subíndices, texto
+   literal y espaciado: el detalle tipográfico en ConTeXt.}}
+  \vfill
+  {\ss\small\color[softgray]{Guía práctica paso a paso}}
+\stopstandardmakeup
+
+\stopfrontmatter
+
+% ------------------------ RESUMEN ---------------------------------------
+\startfrontmatter
+
+\tutorialsection{Resumen}
+En este tutorial aprenderemos a controlar el formato de caracteres,
+palabras y el espaciado horizontal en ConTeXt, paso a paso. Al
+final, podrás modificar mayúsculas y minúsculas, crear versalitas,
+usar superíndices y subíndices, mostrar código literal y gestionar
+el espacio entre palabras. Cada sección incluye el código fuente
+\emph{y} el resultado real, para que veas el efecto de inmediato.
+
+\blank[medium]
+{\ss\bf\color[inkblue]{Contenido}}
+\startcolor[codeframe]\hrule\stopcolor
+\blank[small]
+\placelist[tutorialsection][criterium=all,alternative=c]
+
+\stopfrontmatter
+
+% ------------------------ CUERPO ----------------------------------------
+\startbodymatter
+
+\tutorialsection{Prepara tu espacio de trabajo}
+
+Primero, crea una carpeta llamada \tt{mi\_proyecto\_formato} y dentro
+de ella, un archivo llamado \tt{documento.tex} con este contenido
+inicial:
+
+\blank[small]
+\startcontextcode
+\starttext
+
+\chapter{Formato de caracteres}
+
+Este es mi documento para aprender a formatear caracteres y
+palabras en ConTeXt.
+
+\chapter{Siguiente capítulo}
+
+Más contenido para practicar.
+
+\stoptext
+\stopcontextcode
+\blank[small]
+
+Compila con \tt{context documento.tex} y observa el resultado.
+Obtendrás un PDF con el formato básico. Ahora, vamos a modificarlo.
+
+\tutorialsection{Cambia mayúsculas y minúsculas}
+
+\Objetivo{Convertir texto a mayúsculas o minúsculas de forma
+automática.}
+
+\Accion{Usa los comandos \type{\word}, \type{\Word}, \type{\Words} y
+\type{\WORD}:}
+
+\blank[small]
+\startcontextcode
+\starttext
+
+\word        {esTo es UNa PRueba}
+\Word        {esTo es UNa PRueba}
+\Words       {esTo es UNa PRueba}
+\WORD        {esTo es UNa PRueba}
+\WORDS       {esTo es UNa PRueba}
+
+\stoptext
+\stopcontextcode
+\blank[small]
+
+\Resultado{
+\startitemize[packed,1]
+\item \word{esTo es UNa PRueba}
+\item \Word{esTo es UNa PRueba}
+\item \Words{esTo es UNa PRueba}
+\item \WORD{esTo es UNa PRueba}
+\item \WORDS{esTo es UNa PRueba}
+\stopitemize}
+
+Observa los resultados:
+
+\startitemize[packed,1]
+\item \type{\word}: todo en minúsculas.
+\item \type{\Word}: primera letra en mayúscula.
+\item \type{\Words}: primera letra de cada palabra en mayúscula.
+\item \type{\WORD} y \type{\WORDS}: todo en mayúsculas.
+\stopitemize
+
+\Observacion{\type{\WORD} y \type{\WORDS} hacen lo mismo.}
+
+\tutorialsection{Crea versalitas (falsas pequeñas mayúsculas)}
+
+\Objetivo{Aplicar el efecto de pequeñas mayúsculas a un texto.}
+
+\Accion{Usa los comandos \type{\cap} y \type{\Cap}:}
+
+\blank[small]
+\startcontextcode
+\starttext
+
+\cap{texto en versalitas}
+\Cap{Texto en versalitas con primera letra grande}
+
+\stoptext
+\stopcontextcode
+\blank[small]
+
+\Resultado{\cap{texto en versalitas} \quad
+\Cap{Texto en versalitas con primera letra grande}}
+
+Verás el texto en versalitas. \type{\cap} convierte todo en
+mayúsculas reducidas, mientras que \type{\Cap} mantiene la primera
+letra de cada palabra en tamaño normal.
+
+\Explicacion{Puedes anidar \type{\cap} para reducir aún más el
+tamaño: \cap{las personas que han amasado su \cap{capital} a costa
+de los demás\ldots}}
+
+\tutorialsection{Usa superíndices y subíndices}
+
+\Objetivo{Colocar texto en superíndice (arriba) o subíndice (abajo).}
+
+\Accion{Usa los comandos \type{\high}, \type{\low} y \type{\lohi}:}
+
+\blank[small]
+\startcontextcode
+\starttext
+
+Este es un texto \high{arriba} y otro \low{abajo}.
+También una combinación \lohi{abajo}{arriba}.
+
+\stoptext
+\stopcontextcode
+\blank[small]
+
+\Resultado{Este es un texto \high{arriba} y otro \low{abajo}.
+También una combinación \lohi{abajo}{arriba}.}
+
+\Observacion{Estos comandos funcionan fuera del modo matemático.
+Dentro del modo matemático, usa \type{^} y \type{_}.}
+
+\tutorialsection{Muestra código literal (verbatim)}
+
+\Objetivo{Mostrar texto tal cual, sin que se interpreten comandos.}
+
+\Accion{Usa el comando \type{\type} para texto corto y el entorno
+\type{starttyping} para bloques largos:}
+
+\blank[small]
+\startcontextcode
+\starttext
+
+\type{Texto literal con \comandos y {caracteres} especiales}
+
+\starttyping
+Este es un bloque de texto literal.
+Los comandos como \starttext no se ejecutan.
+Se muestran exactamente como se escriben.
+\stoptyping
+
+\stoptext
+\stopcontextcode
+\blank[small]
+
+Verás el texto en formato monoespaciado (como máquina de escribir)
+sin que los comandos se ejecuten.
+
+\Observacion{\type{\type} es para una línea; \type{starttyping} es
+para múltiples líneas.}
+
+\tutorialsection{Usa un delimitador personalizado en type}
+
+\Objetivo{Incluir llaves o caracteres especiales dentro de un
+\type{\type}.}
+
+\Accion{Usa un carácter delimitador diferente en \type{\type}:}
+
+\blank[small]
+\startcontextcode
+\starttext
+
+\type {Este texto contiene llaves: { } }
+\type |Este texto contiene llaves: { } |
+\type *Este texto contiene llaves: { } *
+
+\stoptext
+\stopcontextcode
+\blank[small]
+
+Todos los ejemplos muestran el texto correctamente. El delimitador
+(el primer carácter después de \type{\type}) define dónde empieza y
+termina el argumento.
+
+\Explicacion{Si tu texto contiene llaves \type{{ }}, usa un
+delimitador diferente como \type{|} o \type{*}.}
+
+\tutorialsection{Añade espacio horizontal entre caracteres}
+
+\Objetivo{Separar caracteres dentro de una palabra para dar un
+efecto visual.}
+
+\Accion{Usa el comando \type{\stretched}:}
+
+\blank[small]
+\startcontextcode
+\starttext
+
+\stretched[factor=0.5, width=5cm]{Texto separado}
+\stretched[factor=1.0, width=5cm]{Texto separado}
+\stretched[factor=1.5, width=5cm]{Texto separado}
+
+\stoptext
+\stopcontextcode
+\blank[small]
+
+\Resultado{
+\stretched[factor=0.5, width=8cm]{Texto separado}\par
+\stretched[factor=1.0, width=8cm]{Texto separado}\par
+\stretched[factor=1.5, width=8cm]{Texto separado}}
+
+Verás cómo el espacio entre caracteres aumenta con el factor.
+\type{factor} controla la cantidad de separación.
+
+\Observacion{Si solo usas \type{width}, el texto se estira para
+ocupar ese ancho.}
+
+\tutorialsection{Añade espacio horizontal entre palabras}
+
+\Objetivo{Controlar el espacio entre palabras en una línea.}
+
+\Accion{Usa comandos como espacio fino, \type{\enskip}, \type{\quad}
+y \type{\qquad}:}
+
+\blank[small]
+\startcontextcode
+\starttext
+
+Espacio normal: Palabra1 Palabra2
+
+Espacio fino: Palabra1\,Palabra2
+
+Medio em: Palabra1\enskip Palabra2
+
+Un em (quad): Palabra1\quad Palabra2
+
+Dos ems (qquad): Palabra1\qquad Palabra2
+
+\stoptext
+\stopcontextcode
+\blank[small]
+
+\Resultado{
+Espacio normal: Palabra1 Palabra2\par
+Espacio fino: Palabra1\,Palabra2\par
+Medio em: Palabra1\enskip Palabra2\par
+Un em (quad): Palabra1\quad Palabra2\par
+Dos ems (qquad): Palabra1\qquad Palabra2}
+
+Observa cómo los diferentes comandos crean espacios de distintos
+tamaños. El espacio fino es útil para separar miles: 1\,000\,000.
+
+\tutorialsection{Alinea texto con espacio flexible}
+
+\Objetivo{Usar espacio elástico para alinear texto a la derecha o
+centrado.}
+
+\Accion{Usa \type{\hfill} para empujar texto:}
+
+\blank[small]
+\startcontextcode
+\starttext
+
+\hfill Texto a la derecha
+
+Texto a la izquierda \hfill Texto a la derecha
+
+\bf{Centrado} \hfill \bf{Centrado}
+
+\stoptext
+\stopcontextcode
+\blank[small]
+
+\Resultado{
+\hfill Texto a la derecha\par
+Texto a la izquierda \hfill Texto a la derecha\par
+\bf{Centrado} \hfill \bf{Centrado}}
+
+\type{\hfill} ocupa todo el espacio disponible, empujando el texto
+a los bordes.
+
+\Explicacion{Usa \type{\wordright{texto}} para alinear una palabra
+a la derecha y saltar de línea:}
+
+\blank[small]
+\startcontextcode
+\wordright{Palabra a la derecha}
+\stopcontextcode
+\blank[small]
+
+\tutorialsection{Crea palabras compuestas}
+
+\Objetivo{Indicar a ConTeXt que dos palabras forman una palabra
+compuesta para una correcta división (guionización).}
+
+\Accion{Usa el separador \type{||} (dos barras verticales):}
+
+\blank[small]
+\startcontextcode
+\starttext
+
+Español||argentino
+
+Unir|/|separar
+
+(inter||)||espacio
+
+\stoptext
+\stopcontextcode
+\blank[small]
+
+\Resultado{Español||argentino \quad Unir|/|separar \quad
+(inter||)||espacio}
+
+ConTeXt trata estas secuencias como una sola palabra compuesta,
+aplicando reglas de división adecuadas.
+
+\Observacion{El separador por defecto es el guion. Puedes cambiarlo
+con \type{\setuphyphenmark}.}
+
+\tutorialsection{Prepara un documento final}
+
+\Objetivo{Usar diferentes técnicas de formato en un documento.}
+
+\Accion{Aplica todos los métodos en un mismo texto:}
+
+\blank[small]
+\startcontextcode
+\starttext
+
+\chapter{Formatos de texto}
+
+\WORD{texto en mayúsculas}
+
+\cap{Texto en versalitas}
+
+Texto \high{arriba} y \low{abajo}.
+
+Código: \type{print("Hola mundo")}
+
+Espacios: \qquad separación \quad grande.
+
+\stretched[factor=0.5, width=8cm]{Texto separado}
+
+\hfill \wordright{Final}
+
+\stoptext
+\stopcontextcode
+\blank[small]
+
+Este documento muestra todos los métodos de formato. Puedes usarlo
+como referencia.
+
+\tutorialsection{Ejercicio}
+
+Recrea y mejora el siguiente texto:
+
+%\setuppapersize[letter]
+%\setupbodyfont[11pt, palatino]
+%\setuplayout[backspace=2.5cm, width=16cm, topspace=2cm, height=24cm]
+%\setupinterlinespace[small]
+%
+%% Estilo elegante de títulos
+%\setuphead[section][style=\bfb, color=darkred, before={\blank[small]}, after={\blank[small]}]
+%\setuphead[subject][style=\bfa, color=darkblue, before={\blank[medium]}, after={\blank[small]}]
+%
+%\subject{1.~Mayúsculas y minúsculas}
+%
+%\type{\word} convierte a minúsculas, \type{\Word} pone la inicial en
+%mayúscula, \type{\Words} pone cada palabra con inicial mayúscula, y
+%\type{\WORD} lo convierte todo a mayúsculas.
+%
+%\blank[small]
+%\startalignment[middle]
+%{\tfx \word{LA PLUMA ES MÁS PODEROSA QUE LA ESPADA}}\\
+%{\tfx \Word{LA PLUMA ES MÁS PODEROSA QUE LA ESPADA}}\\
+%{\tfx \Words{LA PLUMA ES MÁS PODEROSA QUE LA ESPADA}}\\
+%{\tfx \WORD{la pluma es más poderosa que la espada}}
+%\stopalignment
+%
+%\blank[small]
+%\subject{2.~Versalitas (falsas pequeñas mayúsculas)}
+%
+%\type{\cap} pasa todo el texto a versalitas; \type{\Cap} convierte
+%solo la primera letra en versalita.
+%
+%\blank[small]
+%\startalignment[middle]
+%{\tfx \cap{prólogo} \quad \Cap{prólogo} \quad \Cap{cervantes} \quad \cap{el quijote}}
+%\stopalignment
+%
+%\blank[small]
+%\subject{3.~Superíndices y subíndices}
+%
+%\type{\high} coloca un superíndice, \type{\low} un subíndice, y
+%\type{\lohi} coloca ambos a la vez.
+%
+%\blank[small]
+%\startalignment[middle]
+%{\tfx H\high{2}O \quad CO\low{2} \quad x\lohi{2}{3} \quad E = mc\high{2}}
+%\stopalignment
+%
+%\blank[small]
+%\subject{4.~Código literal}
+%
+%\type{\type} muestra código en línea; el entorno \type{starttyping}
+%lo muestra en bloque sin procesar.
+%
+%\blank[small]
+%\starttyping
+%\define[1]\saludo{Hola, #1.}
+%\saludo{lector}
+%\stoptyping
+%
+%\blank[small]
+%\subject{5.~Espaciado entre caracteres y entre palabras}
+%
+%\type{\stretched} separa las letras (solo aumenta, nunca comprime).
+%
+%\blank[small]
+%\startalignment[middle]
+%{\tfx \stretched{ESPACIO} \quad \stretched{ENTRE LETRAS}}
+%\stopalignment
+%
+%\blank[small]
+%Entre palabras: \type{\enskip} (medio em), \type{\quad} (un em) y
+%\type{\qquad} (dos em).
+%
+%\blank[small]
+%\startalignment[middle]
+%{\tfx A\enskip B \quad C\quad D \qquad E\qquad F}
+%\stopalignment
+%
+%\blank[small]
+%
+%\subject{6.~Espacio elástico y palabras compuestas}
+%
+%\type{\hfill} reparte el espacio libre de la línea para alinear.
+%
+%\blank[small]
+%\startalignment[middle]
+%{\tfx izquierda \hfill centro \hfill derecha}
+%\stopalignment
+%
+%\blank[small]
+%Las palabras compuestas se marcan con \type{||}, lo que ayuda a
+%\ConTeXt{} a partir correctamente las líneas.
+%
+%\blank[small]
+%\startalignment[middle]
+%{\tfx entrada||salida \quad (inter||)espacio \quad intra||palabra}
+%\stopalignment
+
+\mainlanguage[es]
+\setuppapersize[letter]
+\setuplayout[
+  topspace=2.0cm,
+  backspace=2.5cm,
+  width=middle,
+  height=middle,
+  header=0pt,
+  footer=1.5cm,
+]
+
+\setupbodyfont[palatino,10.6pt]
+\setupinterlinespace[line=1.35em]
+
+% Paleta sobria
+\definecolor[acento]     [h=8B2E3C]
+\definecolor[gris]       [h=555555]
+\definecolor[fondocodigo][h=F4F1EC]
+
+\setuphead[section][
+  style=\bfc,number=no,
+  color=acento,
+  numberstyle=\bfa,
+  distance=0.6em,
+%  before=1.4em,
+%  after=0.5em,
+]
+
+\setuptyping[
+  style=\tt\tfxx,
+  color=gris,
+  before={\blank[small]},
+  after={\blank[small]},
+]
+
+%\starttext
+
+% ─────────────── Encabezado ───────────────
+\midaligned{\tfb\sc Afinar la tipografía}
+\midaligned{\tfx\color[gris]{Caracteres \cdot\ palabras \cdot\ espacios}}
+\blank[big]
+\hairline
+\blank[medium]
+
+% ─────────────── 1. Caja de casos ───────────────
+\section{Mayúsculas y versalitas}
+
+\startalignment[middle]
+  \starttabulate[|c|c|c|c|]
+  \HL
+  \NC \type{\word}  \NC \type{\Word}  \NC \type{\Words}  \NC \type{\WORD}  \NC \NR
+  \HL
+  \NC \word{tipografía} \NC \Word{tipografía} \NC \Words{tipografía} \NC \WORD{tipografía} \NC \NR
+  \HL
+  \NC \type{\cap}   \NC \Cap{ConTeXt} \NC \cap{ConTeXt} \NC --- \NC \NR
+  \HL
+  \stoptabulate
+\stopalignment
+
+\blank[small]
+El uso de \Cap{versalitas} para acrónimos y de \type{\WORD} para titulares breves
+mantiene la \emph{coherencia visual} del documento.
+
+% ─────────────── 2. Sub/superíndices ───────────────
+\section{Superíndices y subíndices}
+
+\startalignment[middle]
+  \startformula
+    E = mc\high{2}, \qquad
+    H\low{2}O, \qquad
+    a\lohi{n}{k}, \qquad
+    \int_{0}^{\infty} e^{-x\high{2}}\,dx = \frac{\sqrt{\pi}}{2}
+  \stopformula
+\stopalignment
+
+Los tres comandos esenciales son \type{\high}, \type{\low} y \type{\lohi},
+útiles tanto en texto corrido (m\high{2}) como en fórmulas.
+
+% ─────────────── 3. Código literal ───────────────
+\section{Código literal}
+
+Texto en línea: \type{\stretched{gato}} produce:\thinspace \stretched{gato}. 
+
+Y un bloque completo de código literal se obtiene con el entorno \type{\starttyping}\ldots \type{\stoptyping}:
+
+\starttyping
+\def\saludo#1#2{Hola, #1. Bienvenido/a a #2.}
+\saludo{Ana}{\ConTeXt}
+\stoptyping
+
+
+% ─────────────── 4. Espaciado ───────────────
+%\section{El arte del espacio}
+%
+%\startalignment[middle]
+%  \bf fino:
+%  \thinspace|\quad
+%  \type{\enskip}:\enskip|\quad
+%  \type{\quad}:\quad|\quad
+%  \type{\qquad}:\qquad|
+%\stopalignment
+%
+%\blank[small]
+%\startalignment[middle]
+%  \stretched{Letras separadas con gracia}
+%\stopalignment
+
+\blank[medium]
+% ─────────────── 5. Alineación con \hfill ───────────────
+\section{Alineación elástica}
+
+\startframedtext[width=broad,frame=off,background=color,backgroundcolor=fondocodigo]
+  \tfx
+  Autor: \hfill \color[gris]{\ConTeXt\ User Group} \crlf
+  Fecha: \hfill \color[gris]{2026} \crlf
+  Versión: \hfill \color[gris]{1.0}
+\stopframedtext
+
+% ─────────────── 6. Palabras compuestas ───────────────
+\section{Palabras compuestas}
+
+Cuando escribes \type{Lógico||matemática}, \ConTeXt\ entiende que
+\emph{Lógico||matemática} debe permanecer unida, evitando cortes
+incómodos al final de línea.
+
+% ─────────────── 7. Configuración avanzada ───────────────
+\section{Otras opciones}
+
+\startitemize[packed,1]
+
+\item  Por defecto, \type{\cap} produce \emph{falsas} versalitas.
+      Con \type{\setupcapitals[sc=yes]} forzamos el uso de
+      \emph{verdaderas} versalitas si la fuente las incorpora.
+      Pero también podemos definir variantes con nombre:
+
+\starttyping
+\setupcapitals[sc=yes,title=no]
+\definecapitals[miscaps][sc=yes]
+\stoptyping
+
+      \blank[small]
+      \startalignment
+        \tfx
+        \type{\cap} por defecto:\quad \cap{conTeXt} \quad$\cdot$\quad
+        \type{\Cap}:\quad \Cap{ConTeXt}
+      \stopalignment
+
+\item {Usar \type{\definecharacterkerning}}: crear
+      configuraciones personalizadas para \type{\stretched}.
+
+      \type{\stretched} usa internamente el mecanismo de kerning
+      de caracteres. Podemos definir nuestros propios factores con
+      \type{\definecharacterkerning} y aplicarlos con
+      \type{\setcharacterkerning}:
+
+\starttyping
+\definecharacterkerning[muyancho][factor=0.35]
+\definecharacterkerning[estrecho][factor=.05]
+\setupcharacterkerning[letterspacing][
+  style=\spaceskip\dimexpression{
+    3.0\spaceamount*\characterkerningparameter{factor}+\spaceamount
+  },
+]
+\stoptyping
+
+\definecharacterkerning[muyancho][factor=0.35]
+\definecharacterkerning[estrecho][factor=.05]
+\setupcharacterkerning[letterspacing][
+  style=\spaceskip\dimexpression{
+    3.0\spaceamount*\characterkerningparameter{factor}+\spaceamount
+  },
+]
+
+      \blank[small]
+      \startalignment
+        \tfx
+        Normal:\quad tipografía \quad$\cdot$\quad
+        Estrecho:\quad
+          {\setcharacterkerning[estrecho]tipografía} \quad$\cdot$\quad
+        Muy ancho:\quad
+          {\setcharacterkerning[muyancho]tipografía}\quad$\cdot$\quad
+      \type{letterspacing}:\quad{\letterspacing{tipografía}} 
+      \stopalignment
+
+
+\item {Combinar estilos}.
+      Los comandos de mayúsculas, versalitas y espaciado pueden
+      anidarse con \type{\bf}, \type{\em}, \type{\it} y
+      \type{\sc} sin conflicto:
+
+      \blank[small]
+      \startalignment[middle]
+        \tfx
+        \word{conTeXt} \quad
+        \bf\Word{conTeXt} \quad
+        \em\Words{conTeXt} \quad
+        \bf\em\WORD{conTeXt} \quad
+        \cap{conTeXt} \quad
+        \bf\Cap{conTeXt}
+      \stopalignment
+
+      \blank[small]
+      \starttyping
+\bf\WORD{conTeXt}    % negrita + todo mayúsculas
+\em\cap{conTeXt}     % cursiva + versalitas
+      \stoptyping
+
+\stopitemize
+
+\definecharacterkerning
+  [Title]
+  [factor=0.20]
+
+\definefont
+  [TitleFont]
+  [Serif*default at 18pt]
+
+
+\startalignment[middle]
+
+{\TitleFont TÍTULO SIN ESTIRAR}
+
+\blank[big]
+{\TitleFont\setcharacterkerning[Title]TÍTULO ESTIRADO}
+
+\stopalignment
+
+\blank[big]
+\hairline
+\blank[small]
+
+\midaligned{
+  \tfxx\color[gris]{
+    \cap{El buen diseño no se nota: se siente.}
+  }
+}
+
+
+\stopbodymatter
+
+% ------------------------ APÉNDICES --------------------------------------
+\startappendices
+
+\tutorialsection{¡Has logrado!}
+
+Dominar el formato de caracteres, palabras y espacios en ConTeXt.
+Ahora sabes:
+
+\startitemize[packed,1]
+\item \bf{Cambiar mayúsculas/minúsculas}: usar \type{\word},
+      \type{\Word}, \type{\Words}, \type{\WORD}.
+\item \bf{Crear versalitas}: usar \type{\cap} y \type{\Cap} para
+      falsas pequeñas mayúsculas.
+\item \bf{Superíndices y subíndices}: usar \type{\high}, \type{\low}
+      y \type{\lohi}.
+\item \bf{Mostrar código literal}: usar \type{\type} y el entorno
+      \type{starttyping} para texto sin procesar.
+\item \bf{Espaciado entre caracteres}: usar \type{\stretched} para
+      separar letras.
+\item \bf{Espaciado entre palabras}: usar espacio fino,
+      \type{\enskip}, \type{\quad}, \type{\qquad}.
+\item \bf{Espacio elástico}: usar \type{\hfill} para alinear texto.
+\item \bf{Palabras compuestas}: usar \type{||} para indicar palabras
+      compuestas.
+\stopitemize
+
+Este flujo de trabajo te permite controlar el formato de texto a
+nivel de carácter y palabra, mejorando la legibilidad y el diseño
+de tus documentos.
+
+\stopappendices
+
+% ------------------------ BACKMATTER --------------------------------------
+\startbackmatter
+
+\tutorialsection{Próximos pasos}
+
+\startitemize[packed,1]
+\item \bf{Explora \type{\setupcapitals}}: personaliza el
+      comportamiento de \type{\cap} y \type{\Cap}.
+\item \bf{Usa \type{\definecharacterkerning}}: crea configuraciones
+      personalizadas para \type{\stretched}.
+\item \bf{Combina con otros estilos}: aplica negrita o cursiva junto
+      con estos comandos.
+\item \bf{Recuerda}: el formato excesivo puede dificultar la
+      lectura. Úsalo con moderación.
+\stopitemize
+
+\stopbackmatter
+
+\stoptext
