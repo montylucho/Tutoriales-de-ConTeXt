@@ -1,0 +1,763 @@
+% =====================================================================
+%  Guía práctica: Domina las tablas de contenido avanzadas en ConTeXt
+%  Mismo sistema de diseño que las guías anteriores.
+%  Compilar con:  context tocavanzado.tex
+% =====================================================================
+\enabledirectives[overloadmode=error]
+%\environment env_tutorial
+% ---------------------------------------------------------------------
+% 1. Tipografía y colores
+% ---------------------------------------------------------------------
+%\definefontfamily [mainface] [rm] [Pagella]
+%\definefontfamily [mainface] [ss] [Iwona]
+%\definefontfamily [mainface] [tt] [ModernMono]
+%\setupbodyfont     [mainface,11pt]
+%\mainlanguage[es]
+%
+%\definecolor [inkblue]    [r=0.11, g=0.16, b=0.32]
+%\definecolor [accent]     [r=0.72, g=0.20, b=0.20]
+%\definecolor [accentb]    [r=0.10, g=0.35, b=0.45]
+%\definecolor [resultgreen][r=0.13, g=0.42, b=0.24]
+%\definecolor [softgray]   [r=0.45, g=0.45, b=0.45]
+%\definecolor [panelbg]    [r=0.96, g=0.96, b=0.94]
+%\definecolor [resultbg]   [r=0.94, g=0.97, b=0.94]
+%\definecolor [codebg]     [r=0.965,g=0.965,b=0.98]
+%\definecolor [codeframe]  [r=0.80, g=0.80, b=0.85]
+%
+%\setupcolors [state=start]
+%
+%% ---------------------------------------------------------------------
+%% 2. Página y márgenes
+%% ---------------------------------------------------------------------
+%\setuppapersize   [letter]
+%\setuplayout      [
+%  topspace=2cm, backspace=3cm,
+%  header=1cm, footer=1cm,
+%  width=middle, height=middle,
+%  leftmargin=0cm, rightmargin=0cm,
+%]
+%\setupwhitespace [medium]
+%\setupindenting  [never]
+%
+%% ---------------------------------------------------------------------
+%% 3. Encabezados de sección
+%% ---------------------------------------------------------------------
+%\definehead [tutorialsection] [section]
+%
+%\setuphead [tutorialsection]
+%  [style=\bf,
+%   color=inkblue,
+%   number=yes,
+%   numbercolor=accent,
+%   numberstyle=\bf]
+%
+%\setuphead [subsection]
+%  [style=\bf, color=accentb]
+%
+%\setuphead [subsubsection]
+%  [style=\bf, color=accentb]
+%
+%% ---------------------------------------------------------------------
+%% 4. Bloques de código
+%% ---------------------------------------------------------------------
+%\definetyping  [contextcode] [
+%  option=TEX,
+%  space=on,
+%  style=\tt,
+%]
+%
+%\setupbackgrounds [contextcode] [background=color, backgroundcolor=codebg]
+%
+%\setuptyping [contextcode] [
+%  frame=on,
+%  framecolor=codeframe,
+%  rulethickness=0.4pt,
+%  leftmargindistance=1em,
+%  rightmargindistance=1em,
+%  topspace=0.6em,
+%  bottomspace=0.6em,
+%]
+%
+%% ---------------------------------------------------------------------
+%% 5. Cajas: Problema, Solución, Explicación, Observación, Resultado
+%% ---------------------------------------------------------------------
+%\defineframedtext
+%  [problema]
+%  [width=broad, frame=off, background=color, backgroundcolor=panelbg,
+%   leftframe=on, framecolor=accent, rulethickness=2pt, offset=1.2em]
+%
+%\defineframedtext
+%  [solucion]
+%  [width=broad, frame=off, background=color, backgroundcolor=panelbg,
+%   leftframe=on, framecolor=accentb, rulethickness=2pt, offset=1.2em]
+%
+%\defineframedtext
+%  [explicacion]
+%  [width=broad, frame=off, background=color, backgroundcolor=panelbg,
+%   leftframe=on, framecolor=accentb, rulethickness=2pt, offset=1.2em]
+%
+%\defineframedtext
+%  [observacion]
+%  [width=broad, frame=off, background=color, backgroundcolor=panelbg,
+%   leftframe=on, framecolor=accent, rulethickness=2pt, offset=1.2em]
+%
+%\defineframedtext
+%  [resultado]
+%  [width=broad, frame=off, background=color, backgroundcolor=resultbg,
+%   leftframe=on, framecolor=resultgreen, rulethickness=2pt, offset=1.2em]
+%
+%\define[1]\Problema{\blank[small]\startproblema{\bf Problema. }#1\stopproblema\blank[small]}
+%\define[1]\Solucion{\blank[small]\startsolucion{\bf Solución. }#1\stopsolucion\blank[small]}
+%\define[1]\Explicacion{\blank[small]\startexplicacion{\bf Explicación. }#1\stopexplicacion\blank[small]}
+%\define[1]\Observacion{\blank[small]\startobservacion{\bf Observación. }#1\stopobservacion\blank[small]}
+%\define[1]\Resultado{\blank[small]\startresultado{\bf\color[resultgreen]{Resultado.} }#1\stopresultado\blank[small]}
+%
+%% ---------------------------------------------------------------------
+%% 6. Interacción
+%% ---------------------------------------------------------------------
+%\setupinteraction [state=start, color=accentb, contrastcolor=accentb,
+%                   title={Tablas de contenido en ConTeXt}]
+%
+%% ---------------------------------------------------------------------
+%% 7. Pie de página
+%% ---------------------------------------------------------------------
+%\setupheadertexts  [][]
+%\setupfootertexts  [][{\ss\small\color[softgray]{\pagenumber}}]
+
+\environment env_tuto
+% =====================================================================
+\starttext
+
+% ------------------------ PORTADA -------------------------------------
+\startstandardmakeup[pagestate=start]
+  \blank[3*big]
+  \startcolor[tutorialaccent]\hrule height 2pt\stopcolor
+  \blank[medium]
+  {\ss\bf\switchtobodyfont[24pt]\color[inkblue]{Tutorial}}\par
+  \blank[small]
+  {\ss\bf\switchtobodyfont[17pt]\color[inkblue]{Domina las tablas de contenido}}\par
+  {\ss\bf\switchtobodyfont[17pt]\color[tutorialaccent]{avanzadas en ConTeXt}}\par
+  \blank[medium]
+  \startcolor[accentb]\hrule height 0.8pt\stopcolor
+  \blank[2*big]
+  {\it\color[softgray]{TdM completas o parciales: formato, sangría,
+   entradas manuales y secciones no numeradas.}}
+  \vfill
+  {\ss\small\color[softgray]{Guía práctica paso a paso}}
+\stopstandardmakeup
+
+% ------------------------ RESUMEN ---------------------------------------
+\startfrontmatter
+
+\tutorialsection{Resumen}
+En este tutorial aprenderemos a crear y personalizar tablas de
+contenido avanzadas en ConTeXt. Al final, podrás generar TdM
+completas o parciales, controlar su formato y añadir entradas
+manualmente.
+
+\blank[medium]
+{\ss\bf\color[inkblue]{Contenido}}
+\startcolor[codeframe]\hrule\stopcolor
+\blank[small]
+\placelist[tutorialsection][criterium=all,alternative=c]
+
+\stopfrontmatter
+
+% ------------------------ CUERPO ----------------------------------------
+\startbodymatter
+
+% =====================================================================
+\tutorialsection{Prepara tu espacio de trabajo}
+
+Primero, crea una carpeta llamada \tt{mi\_proyecto\_toc\_avanzado} y
+dentro de ella, un archivo llamado \tt{documento.tex} con este
+contenido inicial:
+
+\blank[small]
+\startcontextcod
+\starttext
+
+\chapter{Primer capítulo}
+\section{Primera sección}
+\subsection{Subsección 1.1}
+
+\chapter{Segundo capítulo}
+\section{Segunda sección}
+\subsection{Subsección 2.1}
+
+\stoptext
+\stopcontextcod
+\blank[small]
+
+Compila con \tt{context documento.tex} y observa el resultado.
+Obtendrás un documento con capítulos y secciones. Ahora, vamos a
+añadir una tabla de contenido avanzada.
+
+% =====================================================================
+\tutorialsection{Crea una tabla de contenido con formato personalizado}
+
+\Problema{Generar una TdM con números de página alineados a la derecha
+y puntos de separación.}
+
+\Solucion{Usa \type{\completecontent} con la alternativa \type{c}:}
+
+\blank[small]
+\startcontextcod
+\starttext
+
+\completecontent[alternative=c]
+
+\chapter{Primer capítulo}
+\section{Primera sección}
+\subsection{Subsección 1.1}
+
+\chapter{Segundo capítulo}
+\section{Segunda sección}
+\subsection{Subsección 2.1}
+
+\stoptext
+\stopcontextcod
+\blank[small]
+
+\Resultado{La TdM ahora muestra los números de página alineados a la
+derecha con puntos de separación.}
+
+\Explicacion{La alternativa \type{c} crea una TdM con puntos entre el
+título y el número de página.}
+
+% =====================================================================
+\tutorialsection{Controla la profundidad de la tabla de contenido}
+
+\Problema{Mostrar solo capítulos y secciones, sin subsecciones.}
+
+\Solucion{Usa \type{\setupcombinedlist} para limitar la profundidad:}
+
+\blank[small]
+\startcontextcod
+\setupcombinedlist[content][list={chapter,section}]
+
+\starttext
+
+\completecontent
+
+\chapter{Primer capítulo}
+\section{Primera sección}
+\subsection{Subsección 1.1}
+
+\chapter{Segundo capítulo}
+\section{Segunda sección}
+\subsection{Subsección 2.1}
+
+\stoptext
+\stopcontextcod
+\blank[small]
+
+\Resultado{La TdM muestra capítulos y secciones, pero no
+subsecciones.}
+
+\Observacion{\type{list=\{chapter,section\}} especifica qué niveles
+de sección incluir.}
+
+% =====================================================================
+\tutorialsection{Personaliza el estilo de una entrada de la TdM}
+
+\Problema{Cambiar el color y estilo de los títulos de sección en la
+TdM.}
+
+\Solucion{Usa \type{\setuplist} para configurar las entradas:}
+
+\blank[small]
+\startcontextcod
+\setuplist[section][style={\it}, color=darkblue]
+
+\starttext
+
+\completecontent[alternative=c]
+
+\chapter{Primer capítulo}
+\section{Primera sección}
+\subsection{Subsección 1.1}
+
+\chapter{Segundo capítulo}
+\section{Segunda sección}
+\subsection{Subsección 2.1}
+
+\stoptext
+\stopcontextcod
+\blank[small]
+
+\Resultado{Los títulos de sección aparecen en cursiva y azul oscuro
+en la TdM.}
+
+\Explicacion{\type{\setuplist} permite formatear entradas de la TdM
+de forma independiente.}
+
+% =====================================================================
+\tutorialsection{Ajusta la sangría de las entradas}
+
+\Problema{Aumentar la sangría de las subsecciones en la TdM.}
+
+\Solucion{Usa la opción \type{margin} en \type{\setuplist}:}
+
+\blank[small]
+\startcontextcod
+\setuplist[subsection][margin=2em]
+
+\starttext
+
+\completecontent[alternative=c]
+
+\chapter{Primer capítulo}
+\section{Primera sección}
+\subsection{Subsección 1.1}
+
+\chapter{Segundo capítulo}
+\section{Segunda sección}
+\subsection{Subsección 2.1}
+
+\stoptext
+\stopcontextcod
+\blank[small]
+
+\Resultado{Las subsecciones aparecen con mayor sangría en la TdM.}
+
+% =====================================================================
+\tutorialsection{Incluye secciones no numeradas en la TdM}
+
+\Problema{Que una sección no numerada (como un prólogo) aparezca en
+la TdM.}
+
+\Solucion{Usa \type{\setuphead} para activar \type{incrementnumber}
+y \type{\setupcombinedlist} para incluirla:}
+
+\blank[small]
+\startcontextcod
+\setuphead[subject][incrementnumber=yes]
+\setupcombinedlist[content][list={chapter,section,subject}]
+
+\starttext
+
+\completecontent
+
+\chapter{Primer capítulo}
+\section{Primera sección}
+\startsubject[title=Prólogo no numerado]
+\stopsubject
+
+\stoptext
+\stopcontextcod
+\blank[small]
+
+\Resultado{El prólogo aparece en la TdM, aunque no esté numerado en
+el cuerpo.}
+
+% =====================================================================
+\tutorialsection{Añade una entrada manual a la TdM}
+
+\Problema{Insertar una entrada en la TdM que no corresponde a una
+sección real.}
+
+\Solucion{Usa \type{\writetolist} en cualquier punto del documento:}
+
+\blank[small]
+\startcontextcod
+\starttext
+
+\completecontent
+
+\chapter{Primer capítulo}
+\section{Primera sección}
+
+\writetolist[section]{}{Entrada manual}
+
+\section{Segunda sección}
+
+\stoptext
+\stopcontextcod
+\blank[small]
+
+\Resultado{Aparece una entrada ``Entrada manual'' en la TdM entre las
+secciones.}
+
+\Observacion{El segundo y tercer argumento de \type{\writetolist} no
+siempre funcionan como se espera, pero el texto sí se añade.}
+
+% =====================================================================
+\tutorialsection{Crea una tabla de contenido parcial en un capítulo}
+
+\Problema{Mostrar solo las secciones de un capítulo al inicio del
+mismo.}
+
+\Solucion{Coloca \type{\placecontent} dentro del capítulo:}
+
+\blank[small]
+\startcontextcod
+\starttext
+
+\chapter{Primer capítulo}
+\placecontent
+
+\section{Primera sección}
+\subsection{Subsección 1.1}
+\section{Segunda sección}
+
+\chapter{Segundo capítulo}
+\section{Tercera sección}
+
+\stoptext
+\stopcontextcod
+\blank[small]
+
+\Resultado{Dentro del primer capítulo aparece una TdM con solo sus
+secciones.}
+
+% =====================================================================
+\tutorialsection{Personaliza el título de la TdM}
+
+\Problema{Cambiar ``Tabla de contenido'' por ``Índice general''.}
+
+\Solucion{Usa \type{\setupheadtext} para modificar el texto:}
+
+\blank[small]
+\startcontextcod
+\setupheadtext[es][content={Índice general}]
+
+\starttext
+
+\completecontent
+
+\chapter{Primer capítulo}
+\section{Primera sección}
+
+\stoptext
+\stopcontextcod
+\blank[small]
+
+\Resultado{El título de la TdM ahora es ``Índice general''.}
+
+% =====================================================================
+\tutorialsection{Prepara un documento final con TdM avanzada}
+
+\Problema{Usar todas las técnicas avanzadas en un documento
+coherente.}
+
+\Solucion{Crea un documento que combine formato personalizado,
+sangría, entradas manuales y secciones no numeradas:}
+
+\blank[small]
+\startcontextcod
+% Configuraciones globales
+\setupheadtext[es][content={Índice general}]
+\setupcombinedlist[content][list={chapter,section,subject}]
+
+% Formato de entradas
+\setuplist[section][style={\it}, color=darkblue]
+\setuplist[subsection][margin=2em, color=darkgreen]
+\setuplist[subject][color=darkred]
+
+% Incluir sujetos no numerados
+\setuphead[subject][incrementnumber=yes]
+
+\starttext
+
+\completecontent[alternative=c]
+
+\chapter{Introducción}
+\section{Primera sección}
+
+\chapter{Desarrollo}
+\placecontent  % TdM parcial del capítulo
+
+\section{Segunda sección}
+\subsection{Subsección 2.1}
+
+\startsubject[title=Tema especial]
+\stopsubject
+
+\section{Tercera sección}
+
+\writetolist[section]{}{Nota adicional}
+
+\chapter{Conclusiones}
+\section{Cuarta sección}
+
+\stoptext
+\stopcontextcod
+\blank[small]
+
+\Resultado{El documento tiene una TdM global con formato
+personalizado, secciones no numeradas, una entrada manual y una TdM
+parcial en el capítulo ``Desarrollo''.}
+\tutorialsection{Ejercicio}
+
+Practica lo aprendido intentando una tabla de contenidos como la siguiente:
+% ============================================================
+% DOCUMENTO DE MUESTRA
+% Índice de contenido — versión estable
+% ConTeXt LMTX
+% ============================================================
+
+\setuppapersize[letter]
+\mainlanguage[es]
+
+% ------------------------------------------------------------
+% TIPOGRAFÍA
+% ------------------------------------------------------------
+
+\definefontfamily[mainface][rm][Pagella]
+\definefontfamily[mainface][ss][Iwona]
+\definefontfamily[mainface][tt][ModernMono]
+
+\setupbodyfont[mainface,11pt]
+
+% ------------------------------------------------------------
+% COLORES
+% ------------------------------------------------------------
+
+\definecolor[Azul][h=315B7D]
+\definecolor[AzulOscuro][h=173A5A]
+\definecolor[Rojo][h=B33A32]
+\definecolor[Gris][h=687078]
+\definecolor[Fondo][h=F4F6F7]
+
+% ------------------------------------------------------------
+% PÁGINA
+% ------------------------------------------------------------
+
+\setuplayout
+  [
+    width=middle,
+    height=middle,
+    backspace=24mm,
+    topspace=18mm,
+    header=8mm,
+    footer=8mm,
+    headerdistance=4mm,
+    footerdistance=4mm
+  ]
+
+% ------------------------------------------------------------
+% CAPÍTULOS Y SECCIONES
+% ------------------------------------------------------------
+
+\setuphead
+  [chapter,section,subsection]
+  [page=no]
+
+\setupcombinedlist
+  [content]
+  [list={chapter,section}]
+
+% ------------------------------------------------------------
+% ENCABEZADO Y PIE
+% ------------------------------------------------------------
+
+%\setupheadertexts
+%  []
+%  [{\switchtobodyfont[8pt]\ss\color[Gris]
+%    CUADERNO DE MÉTODOS\, \diamond\ MATEMÁTICAS}]
+
+%\setupfootertexts
+%  [{\switchtobodyfont[8pt]\ss\color[Gris] MALAQUÍAS}]
+%  [{\switchtobodyfont[8pt]\ss\color[Gris] \pagenumber}]
+
+% ------------------------------------------------------------
+% CONFIGURACIÓN DEL ÍNDICE
+% ------------------------------------------------------------
+
+\setuplist
+  [chapter]
+  [
+    alternative=b,
+    width=10mm,
+    distance=1mm,
+    textstyle={\switchtobodyfont[14pt]\ss\bf},
+    textcolor=AzulOscuro,
+    pagenumberstyle={\switchtobodyfont[10pt]\ss},
+    pagenumbercolor=Gris
+  ]
+
+\setuplist
+  [section]
+  [
+    alternative=b,
+    width=10mm,
+    distance=1mm,
+    textstyle={\switchtobodyfont[11pt]\ss},
+    textcolor=Gris,
+    pagenumberstyle={\switchtobodyfont[9pt]\ss},
+    pagenumbercolor=Gris
+  ]
+
+\setuplist
+  [subsection]
+  [
+    alternative=b,
+    width=10mm,
+    distance=1mm,
+    textstyle={\switchtobodyfont[9pt]\ss\it},
+    textcolor=Gris,
+    pagenumberstyle={\switchtobodyfont[8pt]\ss},
+    pagenumbercolor=Gris
+  ]
+
+% ------------------------------------------------------------
+% RÓTULO GENÉRICO
+% ------------------------------------------------------------
+
+\define[2]\Rotulo
+  {{\switchtobodyfont[#1]#2}}
+
+% ============================================================
+% DOCUMENTO
+% ============================================================
+
+
+% ============================================================
+% PORTADA DEL ÍNDICE
+% ============================================================
+
+\Rotulo{10pt}{CUADERNO DE MÉTODOS}
+
+\blank[small]
+
+\Rotulo{24pt}{Mapa del libro}
+
+\blank[small]
+
+\Rotulo{11pt}{Una arquitectura de ideas, métodos y problemas}
+
+\blank[medium]
+
+\blackrule
+  [
+    width=\textwidth,
+    height=1.2pt,
+    color=AzulOscuro
+  ]
+
+\blank[big]
+
+\Rotulo{11pt}{
+  Este libro está organizado como una progresión:
+  primero se reconoce la estructura del problema;
+  después se elige el método; finalmente se ejecuta
+  el cálculo.
+}
+
+\blank[big]
+
+\blackrule
+  [
+    width=30mm,
+    height=1pt,
+    color=Rojo,
+  ]
+
+\blank[small]
+\completecontent[criterium=all]
+% ============================================================
+% CONTENIDO DE MUESTRA
+% ============================================================
+
+\startchapter[title={El método de intervalos}]
+
+  \startsection[title={Signos y puntos críticos}]
+
+    \startsubsection[title={Definición de punto crítico}]
+
+      Un punto crítico es aquel donde la derivada se anula
+      o no existe.
+
+    \stopsubsection
+
+    \startsubsection[title={Signos en cada intervalo}]
+
+      Se evalúa la función en un punto de prueba dentro
+      de cada intervalo.
+
+    \stopsubsection
+
+  \stopsection
+
+  \startsection[title={Construcción de la tabla de signos}]
+
+    La tabla organiza los intervalos y los signos resultantes.
+
+  \stopsection
+
+\stopchapter
+
+% ============================================================
+% ÍNDICE
+% ============================================================
+
+%\completecontent
+
+% ============================================================
+% CIERRE EDITORIAL
+% ============================================================
+
+\blank[big]
+
+\blackrule
+  [
+    width=30mm,
+    height=1pt,
+    color=Rojo,
+  ]
+
+\blank[small]
+
+%\Rotulo{8pt}{MÉTODOS \texttbullet ESTRUCTURA \textbullet RESOLUCIÓN}
+
+\stopbodymatter
+
+% ------------------------ APÉNDICES --------------------------------------
+\startappendices
+
+\tutorialsection{¡Has logrado!}
+
+Dominar las tablas de contenido avanzadas en ConTeXt. Ahora sabes:
+
+\startitemize
+\item \bf{Controlar el formato}: usar \type{alternative} para
+      diferentes estilos de TdM.
+\item \bf{Limitar la profundidad}: usar \type{\setupcombinedlist}
+      para seleccionar niveles.
+\item \bf{Personalizar entradas}: usar \type{\setuplist} para estilo,
+      color y sangría.
+\item \bf{Incluir secciones no numeradas}: usar \type{\setuphead} y
+      \type{\setupcombinedlist}.
+\item \bf{Añadir entradas manuales}: usar \type{\writetolist} para
+      insertar elementos.
+\item \bf{Crear TdM parciales}: usar \type{\placecontent} dentro de
+      capítulos.
+\item \bf{Personalizar el título}: usar \type{\setupheadtext} para
+      cambiar el texto.
+\stopitemize
+
+Este flujo de trabajo te permite crear tablas de contenido adaptadas
+a las necesidades de tus documentos.
+
+\stopappendices
+
+% ------------------------ BACKMATTER --------------------------------------
+\startbackmatter
+
+\tutorialsection{Próximos pasos}
+
+\startitemize
+\item \bf{Explora más opciones}: \type{\setuplist} tiene opciones
+      como \type{numberalign}, \type{width}, \type{distance}.
+\item \bf{Combina con otros elementos}: usa TdM en diferentes
+      idiomas o con diferentes estilos.
+\item \bf{Crea plantillas}: define configuraciones de TdM en un
+      archivo separado.
+\item \bf{Recuerda}: una buena TdM mejora la navegación y comprensión
+      del documento.
+\stopitemize
+
+\stopbackmatter
+
+\stoptext
